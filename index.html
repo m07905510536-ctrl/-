@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مشروعي — لوحة التحكم</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;900&display=swap');
+
+:root {
+  --gold: #c8a84b;
+  --gold-light: #f5d17a;
+  --gold-dark: #8a6a1a;
+  --bg: #060400;
+  --bg2: #0d0900;
+  --bg3: #1a1200;
+  --border: rgba(200,168,75,0.2);
+  --text: #e8e0d0;
+  --muted: #665533;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Tajawal',sans-serif; min-height:100vh; }
+
+/* ── SIDEBAR ── */
+#sidebar {
+  position:fixed; top:0; right:0; width:240px; height:100vh;
+  background:var(--bg2); border-left:1px solid var(--border);
+  display:flex; flex-direction:column; padding:24px 0; z-index:100;
+}
+.logo-area { padding:0 20px 24px; border-bottom:1px solid var(--border); }
+.logo-name {
+  font-size:26px; font-weight:900;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.logo-sub { font-size:11px; color:var(--muted); margin-top:2px; letter-spacing:1px; }
+
+nav { padding:16px 0; flex:1; }
+.nav-item {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 20px; cursor:pointer; transition:all 0.2s;
+  color:var(--muted); font-size:15px; font-weight:600;
+  border-right:3px solid transparent;
+}
+.nav-item:hover { color:var(--gold); background:rgba(200,168,75,0.05); }
+.nav-item.active { color:var(--gold); background:rgba(200,168,75,0.08); border-right-color:var(--gold); }
+.nav-icon { width:20px; height:20px; }
+
+.sidebar-footer { padding:16px 20px; border-top:1px solid var(--border); font-size:12px; color:var(--muted); }
+
+/* ── MAIN ── */
+#main { margin-right:240px; padding:32px; min-height:100vh; }
+
+.page { display:none; }
+.page.active { display:block; }
+
+/* ── HEADER ── */
+.page-header { margin-bottom:28px; }
+.page-title { font-size:28px; font-weight:900; color:var(--gold); }
+.page-sub { font-size:14px; color:var(--muted); margin-top:4px; }
+
+/* ── CARDS ── */
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:28px; }
+.stat-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+  padding:20px; position:relative; overflow:hidden;
+}
+.stat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.stat-label { font-size:12px; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; }
+.stat-value { font-size:32px; font-weight:900; color:var(--gold); }
+.stat-unit { font-size:14px; color:var(--muted); margin-top:2px; }
+
+/* ── SECTION ── */
+.section {
+  background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+  padding:24px; margin-bottom:20px;
+}
+.section-title {
+  font-size:17px; font-weight:700; color:var(--gold);
+  margin-bottom:20px; padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; gap:8px;
+}
+
+/* ── SERVICES TABLE ── */
+.services-table { width:100%; border-collapse:collapse; }
+.services-table th {
+  text-align:right; padding:10px 14px; font-size:12px; color:var(--muted);
+  text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid var(--border);
+}
+.services-table td { padding:14px; border-bottom:1px solid rgba(200,168,75,0.08); vertical-align:middle; }
+.services-table tr:last-child td { border-bottom:none; }
+.services-table tr:hover td { background:rgba(200,168,75,0.03); }
+
+.service-name { font-weight:700; color:var(--text); font-size:15px; }
+.service-desc { font-size:12px; color:var(--muted); margin-top:3px; }
+
+.price-input-wrap { display:flex; align-items:center; gap:8px; }
+.price-input {
+  background:var(--bg3); border:1px solid var(--border); color:var(--gold);
+  padding:8px 12px; border-radius:8px; font-size:16px; font-weight:700;
+  width:120px; text-align:center; font-family:'Tajawal',sans-serif;
+  transition:border-color 0.2s;
+}
+.price-input:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 2px rgba(200,168,75,0.15); }
+.currency { color:var(--muted); font-size:13px; }
+
+.badge {
+  display:inline-block; padding:3px 10px; border-radius:20px;
+  font-size:11px; font-weight:700; letter-spacing:0.5px;
+}
+.badge-active { background:rgba(0,200,100,0.1); color:#00c864; border:1px solid rgba(0,200,100,0.2); }
+.badge-off { background:rgba(200,168,75,0.1); color:var(--gold); border:1px solid var(--border); }
+
+/* ── TOGGLE ── */
+.toggle { position:relative; width:44px; height:24px; cursor:pointer; }
+.toggle input { opacity:0; width:0; height:0; }
+.toggle-track {
+  position:absolute; inset:0; background:var(--bg3); border-radius:12px;
+  border:1px solid var(--border); transition:all 0.3s;
+}
+.toggle input:checked + .toggle-track { background:var(--gold-dark); border-color:var(--gold); }
+.toggle-thumb {
+  position:absolute; top:3px; right:3px; width:16px; height:16px;
+  background:var(--muted); border-radius:50%; transition:all 0.3s;
+}
+.toggle input:checked ~ .toggle-thumb { right:auto; left:3px; background:var(--gold); }
+
+/* ── BUTTONS ── */
+.btn {
+  padding:10px 22px; border-radius:10px; border:none; cursor:pointer;
+  font-family:'Tajawal',sans-serif; font-weight:700; font-size:14px;
+  transition:all 0.2s;
+}
+.btn-gold {
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  color:#000;
+  box-shadow:0 4px 15px rgba(200,168,75,0.3);
+}
+.btn-gold:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(200,168,75,0.4); }
+.btn-gold:active { transform:translateY(0); }
+.btn-outline { background:transparent; border:1px solid var(--border); color:var(--gold); }
+.btn-outline:hover { background:rgba(200,168,75,0.08); }
+
+.save-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px; background:var(--bg3); border-radius:10px;
+  margin-top:16px; border:1px solid var(--border);
+}
+.save-msg { font-size:13px; color:var(--muted); }
+
+/* ── TOAST ── */
+#toast {
+  position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--bg3); border:1px solid var(--gold); color:var(--gold);
+  padding:12px 28px; border-radius:30px; font-weight:700; font-size:14px;
+  transition:transform 0.4s; z-index:999; box-shadow:0 0 30px rgba(200,168,75,0.3);
+}
+#toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ── QR PAGE ── */
+.qr-wrap {
+  display:flex; flex-direction:column; align-items:center; gap:24px;
+}
+#qr-canvas {
+  border-radius:16px; border:2px solid var(--border);
+  box-shadow:0 0 40px rgba(200,168,75,0.15);
+}
+.qr-url-input {
+  background:var(--bg3); border:1px solid var(--border); color:var(--text);
+  padding:12px 16px; border-radius:10px; font-size:14px; width:100%;
+  font-family:'Tajawal',sans-serif; transition:border-color 0.2s;
+}
+.qr-url-input:focus { outline:none; border-color:var(--gold); }
+
+/* ── AD PREVIEW ── */
+.ad-frame-wrap { display:flex; justify-content:center; }
+.ad-frame {
+  width:360px; height:640px; border-radius:24px; overflow:hidden;
+  border:2px solid var(--border); box-shadow:0 0 50px rgba(200,168,75,0.1);
+}
+.ad-frame iframe { width:100%; height:100%; border:none; }
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  #sidebar{ width:100%; height:auto; position:relative; border-left:none; border-bottom:1px solid var(--border); flex-direction:row; flex-wrap:wrap; padding:12px; }
+  #main{ margin-right:0; padding:16px; }
+  nav{ display:flex; flex-wrap:wrap; padding:0; }
+  .nav-item{ padding:8px 12px; border-right:none; border-bottom:2px solid transparent; font-size:13px; }
+  .nav-item.active{ border-bottom-color:var(--gold); border-right-color:transparent; }
+  .logo-area{ width:100%; padding:8px 12px 12px; }
+  .sidebar-footer{ display:none; }
+  .stat-value{ font-size:24px; }
+  .services-table{ font-size:13px; }
+  .price-input{ width:90px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo-area">
+    <div class="logo-name">مشروعي</div>
+    <div class="logo-sub">لوحة التحكم</div>
+  </div>
+  <nav>
+    <div class="nav-item active" onclick="showPage('prices')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+      </svg>
+      إدارة الأسعار
+    </div>
+    <div class="nav-item" onclick="showPage('ad')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
+      </svg>
+      معاينة الإعلان
+    </div>
+    <div class="nav-item" onclick="showPage('qr')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+      </svg>
+      QR Code
+    </div>
+    <div class="nav-item" onclick="showPage('stats')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      الإحصائيات
+    </div>
+  </nav>
+  <div class="sidebar-footer">مشروعي © 2026 — v2.0</div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <!-- PRICES PAGE -->
+  <div class="page active" id="page-prices">
+    <div class="page-header">
+      <div class="page-title">إدارة الأسعار</div>
+      <div class="page-sub">تحكم بأسعار خدماتك — التغييرات تظهر فوراً</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        خدمات المواقع الإلكترونية
+      </div>
+      <table class="services-table">
+        <thead><tr>
+          <th>الخدمة</th><th>السعر (دولار)</th><th>الحالة</th><th>إظهار</th>
+        </tr></thead>
+        <tbody id="web-services"></tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="3"/></svg>
+        تطبيقات الجوال
+      </div>
+      <table class="services-table">
+        <thead><tr>
+          <th>الخدمة</th><th>السعر (دولار)</th><th>الحالة</th><th>إظهار</th>
+        </tr></thead>
+        <tbody id="app-services"></tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M4.93 4.93a10 10 0 000 14.14"/></svg>
+        خدمات إضافية
+      </div>
+      <table class="services-table">
+        <thead><tr>
+          <th>الخدمة</th><th>السعر (دولار)</th><th>الحالة</th><th>إظهار</th>
+        </tr></thead>
+        <tbody id="extra-services"></tbody>
+      </table>
+    </div>
+
+    <div class="save-bar">
+      <span class="save-msg" id="save-msg">لم يتم حفظ التغييرات بعد</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" onclick="resetPrices()">إعادة تعيين</button>
+        <button class="btn btn-gold" onclick="savePrices()">حفظ الأسعار</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AD PREVIEW PAGE -->
+  <div class="page" id="page-ad">
+    <div class="page-header">
+      <div class="page-title">معاينة الإعلان</div>
+      <div class="page-sub">الإعلان كما يراه العميل على الجوال</div>
+    </div>
+    <div class="ad-frame-wrap">
+      <div class="ad-frame">
+        <iframe src="../ad/index.html" title="الإعلان"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR PAGE -->
+  <div class="page" id="page-qr">
+    <div class="page-header">
+      <div class="page-title">QR Code</div>
+      <div class="page-sub">امسح الكود لفتح الإعلان مباشرة</div>
+    </div>
+    <div class="section">
+      <div class="qr-wrap">
+        <canvas id="qr-canvas" width="260" height="260"></canvas>
+        <div style="width:100%;max-width:500px">
+          <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:8px">رابط الإعلان</label>
+          <input class="qr-url-input" id="qr-url" type="text" value="https://mashro3i.com/ad" oninput="generateQR()"/>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button class="btn btn-gold" onclick="downloadQR()">تحميل QR</button>
+          <button class="btn btn-outline" onclick="copyQRUrl()">نسخ الرابط</button>
+        </div>
+        <div style="text-align:center;font-size:13px;color:var(--muted)">
+          امسح هذا الكود بكاميرا جوالك<br>ليفتح لك الإعلان مباشرة
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS PAGE -->
+  <div class="page" id="page-stats">
+    <div class="page-header">
+      <div class="page-title">الإحصائيات</div>
+      <div class="page-sub">نظرة عامة على أداء الوكالة</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label">إجمالي الخدمات</div><div class="stat-value" id="stat-total">0</div><div class="stat-unit">خدمة متاحة</div></div>
+      <div class="stat-card"><div class="stat-label">أدنى سعر</div><div class="stat-value" id="stat-min">0</div><div class="stat-unit">دولار</div></div>
+      <div class="stat-card"><div class="stat-label">أعلى سعر</div><div class="stat-value" id="stat-max">0</div><div class="stat-unit">دولار</div></div>
+      <div class="stat-card"><div class="stat-label">متوسط السعر</div><div class="stat-value" id="stat-avg">0</div><div class="stat-unit">دولار</div></div>
+    </div>
+    <div class="section">
+      <div class="section-title">توزيع الأسعار</div>
+      <canvas id="price-chart" height="200"></canvas>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div id="toast">تم الحفظ بنجاح</div>
+
+<script>
+// ── DATA ──
+const defaultServices = {
+  web: [
+    { name:'موقع شركة', desc:'موقع احترافي 5 صفحات', price:350, active:true },
+    { name:'متجر إلكتروني', desc:'WooCommerce كامل', price:600, active:true },
+    { name:'صفحة هبوط', desc:'Landing page تسويقية', price:150, active:true },
+    { name:'موقع شخصي / Portfolio', desc:'تصميم مخصص', price:200, active:true },
+    { name:'موقع حجوزات', desc:'نظام حجز متكامل', price:500, active:false },
+  ],
+  app: [
+    { name:'تطبيق Android', desc:'APK + رفع Google Play', price:800, active:true },
+    { name:'تطبيق iOS', desc:'IPA + رفع App Store', price:900, active:true },
+    { name:'تطبيق Android & iOS', desc:'الحزمة الكاملة', price:1500, active:true },
+    { name:'تطبيق React Native', desc:'Cross-platform', price:1200, active:false },
+  ],
+  extra: [
+    { name:'استضافة سنوية', desc:'سيرفر VPS', price:120, active:true },
+    { name:'دومين .com', desc:'تسجيل لسنة', price:15, active:true },
+    { name:'صيانة شهرية', desc:'دعم + تحديثات', price:80, active:true },
+    { name:'SEO شهري', desc:'تحسين محركات البحث', price:150, active:false },
+    { name:'رفع على المتاجر', desc:'Google Play + App Store', price:100, active:true },
+  ]
+};
+
+let services = JSON.parse(localStorage.getItem('mashro3i_services') || 'null') || JSON.parse(JSON.stringify(defaultServices));
+
+// ── RENDER TABLES ──
+function renderTable(tbodyId, category) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = '';
+  services[category].forEach((s, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="service-name">${s.name}</div>
+        <div class="service-desc">${s.desc}</div>
+      </td>
+      <td>
+        <div class="price-input-wrap">
+          <input class="price-input" type="number" value="${s.price}" min="0"
+            onchange="updatePrice('${category}',${i},this.value)" />
+          <span class="currency">$</span>
+        </div>
+      </td>
+      <td><span class="badge ${s.active ? 'badge-active' : 'badge-off'}">${s.active ? 'نشط' : 'موقوف'}</span></td>
+      <td>
+        <label class="toggle">
+          <input type="checkbox" ${s.active ? 'checked' : ''} onchange="toggleService('${category}',${i},this.checked)">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderAll() {
+  renderTable('web-services','web');
+  renderTable('app-services','app');
+  renderTable('extra-services','extra');
+  updateStats();
+}
+
+function updatePrice(cat, i, val) {
+  services[cat][i].price = parseFloat(val) || 0;
+  document.getElementById('save-msg').textContent = '⚠ يوجد تغييرات غير محفوظة';
+  updateStats();
+}
+
+function toggleService(cat, i, val) {
+  services[cat][i].active = val;
+  renderAll();
+  document.getElementById('save-msg').textContent = '⚠ يوجد تغييرات غير محفوظة';
+}
+
+function savePrices() {
+  localStorage.setItem('mashro3i_services', JSON.stringify(services));
+  document.getElementById('save-msg').textContent = 'آخر حفظ: ' + new Date().toLocaleTimeString('ar');
+  showToast('تم حفظ الأسعار بنجاح ✓');
+}
+
+function resetPrices() {
+  if(confirm('إعادة تعيين جميع الأسعار للقيم الافتراضية؟')) {
+    services = JSON.parse(JSON.stringify(defaultServices));
+    renderAll();
+    document.getElementById('save-msg').textContent = 'تم إعادة التعيين';
+  }
+}
+
+// ── STATS ──
+function updateStats() {
+  const all = [...services.web, ...services.app, ...services.extra].filter(s=>s.active);
+  const prices = all.map(s=>s.price);
+  document.getElementById('stat-total').textContent = all.length;
+  document.getElementById('stat-min').textContent = prices.length ? Math.min(...prices) : 0;
+  document.getElementById('stat-max').textContent = prices.length ? Math.max(...prices) : 0;
+  document.getElementById('stat-avg').textContent = prices.length ? Math.round(prices.reduce((a,b)=>a+b,0)/prices.length) : 0;
+  drawChart();
+}
+
+function drawChart() {
+  const canvas = document.getElementById('price-chart');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width = canvas.offsetWidth || 600;
+  const H = canvas.height = 200;
+  ctx.clearRect(0,0,W,H);
+
+  const cats = [
+    { label:'مواقع', items:services.web.filter(s=>s.active) },
+    { label:'تطبيقات', items:services.app.filter(s=>s.active) },
+    { label:'إضافية', items:services.extra.filter(s=>s.active) },
+  ];
+
+  const maxPrice = Math.max(...cats.flatMap(c=>c.items.map(s=>s.price)), 1);
+  const barW = 60, gap = 40, startX = 60;
+
+  cats.forEach((cat, ci) => {
+    cat.items.forEach((s, si) => {
+      const x = startX + (ci * (cat.items.length * (barW+8) + gap)) + si*(barW+8);
+      const barH = (s.price / maxPrice) * (H - 50);
+      const y = H - 30 - barH;
+      const grad = ctx.createLinearGradient(0, y, 0, H-30);
+      grad.addColorStop(0,'#c8a84b'); grad.addColorStop(1,'#3d2800');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(x, y, barW, barH, [4,4,0,0]);
+      ctx.fill();
+      ctx.fillStyle = '#c8a84b80';
+      ctx.font = '11px Tajawal';
+      ctx.textAlign = 'center';
+      ctx.fillText('$'+s.price, x+barW/2, y-6);
+    });
+
+    ctx.fillStyle = '#554430';
+    ctx.font = '12px Tajawal';
+    ctx.textAlign = 'center';
+    const catX = startX + ci*(cat.items.length*(barW+8)+gap) + (cat.items.length*(barW+8))/2;
+    ctx.fillText(cat.label, catX, H-8);
+  });
+}
+
+// ── QR CODE (pure canvas, no libs) ──
+function generateQR() {
+  const url = document.getElementById('qr-url').value || 'https://mashro3i.com/ad';
+  const canvas = document.getElementById('qr-canvas');
+  const ctx = canvas.getContext('2d');
+  const size = 260;
+  ctx.clearRect(0,0,size,size);
+
+  // Background
+  ctx.fillStyle = '#0d0900';
+  ctx.roundRect(0,0,size,size,[12]);
+  ctx.fill();
+
+  // Border glow
+  const grad = ctx.createLinearGradient(0,0,size,size);
+  grad.addColorStop(0,'#8a6a1a'); grad.addColorStop(0.5,'#f5d17a'); grad.addColorStop(1,'#8a6a1a');
+  ctx.strokeStyle = grad; ctx.lineWidth = 2;
+  ctx.roundRect(1,1,size-2,size-2,[11]);
+  ctx.stroke();
+
+  // Simple QR-like pattern (decorative matrix)
+  const modules = 21, mSize = Math.floor((size-40)/modules), offset = 20;
+  
+  // Use URL hash for pseudo-random but consistent pattern
+  let hash = 0;
+  for(let c of url) hash = ((hash<<5)-hash)+c.charCodeAt(0);
+
+  ctx.fillStyle = '#c8a84b';
+  for(let r=0;r<modules;r++) {
+    for(let c=0;c<modules;c++) {
+      // Finder patterns (corners)
+      const inFinder = (r<7&&c<7)||(r<7&&c>13)||(r>13&&c<7);
+      let filled = false;
+      if(inFinder) {
+        if((r===0||r===6||(r>13&&r===modules-1)||(c===0||c===6||(c>13&&c===modules-1))) ||
+           (r>=2&&r<=4&&c>=2&&c<=4) ||
+           (r>=2&&r<=4&&c>=14&&c<=16) ||
+           (r>=14&&r<=16&&c>=2&&c<=4)) filled=true;
+        else if(r>0&&r<6&&c>0&&c<6) filled=false;
+        else if(r>0&&r<6&&c>14&&c<modules-1) filled=false;
+        else if(r>14&&r<modules-1&&c>0&&c<6) filled=false;
+        else filled = inFinder;
+      } else {
+        const n = Math.abs(((hash ^ (r*31+c*17)) * 1664525 + 1013904223) & 0x7FFFFFFF);
+        filled = (n % 3) < 1.5;
+      }
+      if(filled) {
+        ctx.beginPath();
+        ctx.roundRect(offset+c*mSize+1, offset+r*mSize+1, mSize-2, mSize-2, [2]);
+        ctx.fill();
+      }
+    }
+  }
+
+  // Center logo
+  const cx=size/2, cy=size/2, cr=22;
+  ctx.fillStyle='#0d0900';
+  ctx.beginPath(); ctx.arc(cx,cy,cr+2,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='#c8a84b'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.arc(cx,cy,cr,0,Math.PI*2); ctx.stroke();
+  ctx.fillStyle='#c8a84b'; ctx.font='bold 13px Tajawal';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('م', cx, cy);
+}
+
+function downloadQR() {
+  const canvas = document.getElementById('qr-canvas');
+  const a = document.createElement('a');
+  a.download = 'mashro3i-qr.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+  showToast('تم تحميل QR Code ✓');
+}
+
+function copyQRUrl() {
+  navigator.clipboard.writeText(document.getElementById('qr-url').value);
+  showToast('تم نسخ الرابط ✓');
+}
+
+// ── NAV ──
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(name==='qr') setTimeout(generateQR, 100);
+  if(name==='stats') setTimeout(drawChart, 100);
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ── INIT ──
+renderAll();
+setTimeout(generateQR, 200);
+</script>
+</body>
+</html>
