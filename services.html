@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مشروعي — خدماتنا وأسعارنا</title>
+<meta name="description" content="وكالة مشروعي — تصميم مواقع وتطبيقات احترافية بأفضل الأسعار">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;900&display=swap');
+:root{
+  --gold:#c8a84b;--gold-light:#f5d17a;--gold-dark:#8a6a1a;
+  --bg:#060400;--bg2:#0d0900;--bg3:#1a1200;
+  --border:rgba(200,168,75,0.18);--text:#e8e0d0;--muted:#665533;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Tajawal',sans-serif;min-height:100vh}
+
+/* ── HEADER ── */
+header{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);
+}
+.logo{
+  font-size:28px;font-weight:900;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.header-cta{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:#000;border:none;padding:10px 20px;border-radius:25px;
+  font-family:'Tajawal',sans-serif;font-weight:700;font-size:14px;
+  cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;
+}
+
+/* ── HERO ── */
+.hero{
+  text-align:center;padding:50px 20px 40px;
+  background:radial-gradient(ellipse at top,#1c1200 0%,#060400 60%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 100%,rgba(200,168,75,0.06),transparent 70%);
+}
+.hero-badge{
+  display:inline-block;background:rgba(200,168,75,0.1);border:1px solid var(--border);
+  color:var(--gold);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;
+  margin-bottom:20px;letter-spacing:1px;
+}
+.hero-title{font-size:36px;font-weight:900;line-height:1.3;margin-bottom:12px}
+.hero-title span{
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{font-size:16px;color:var(--muted);max-width:400px;margin:0 auto 28px;line-height:1.6}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  color:#000;border:none;padding:14px 28px;border-radius:30px;
+  font-family:'Tajawal',sans-serif;font-weight:900;font-size:16px;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 0 30px rgba(200,168,75,0.3);transition:all 0.2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(200,168,75,0.4)}
+.btn-secondary{
+  background:transparent;color:var(--gold);border:1px solid var(--border);
+  padding:14px 28px;border-radius:30px;font-family:'Tajawal',sans-serif;
+  font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;
+}
+.btn-secondary:hover{background:rgba(200,168,75,0.08)}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  display:flex;justify-content:center;gap:0;
+  background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.stat-item{
+  padding:18px 32px;text-align:center;border-left:1px solid var(--border);
+  flex:1;min-width:120px;
+}
+.stat-item:last-child{border-left:none}
+.stat-num{font-size:26px;font-weight:900;color:var(--gold)}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ── SECTION ── */
+.section{padding:40px 20px;max-width:900px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:30px}
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(200,168,75,0.08);border:1px solid var(--border);
+  color:var(--gold);padding:6px 16px;border-radius:20px;
+  font-size:13px;font-weight:600;margin-bottom:14px;
+}
+.section-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:8px}
+.section-sub{font-size:14px;color:var(--muted)}
+
+/* ── CARDS GRID ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:16px;
+  padding:22px;position:relative;overflow:hidden;transition:all 0.3s;cursor:pointer;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.card:hover{border-color:rgba(200,168,75,0.4);transform:translateY(-3px);box-shadow:0 10px 40px rgba(200,168,75,0.1)}
+.card:hover::before{opacity:1}
+.card.featured{border-color:rgba(200,168,75,0.4);background:linear-gradient(135deg,#1a1200,#0d0900)}
+.card.featured::before{opacity:1}
+.featured-badge{
+  position:absolute;top:14px;left:14px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:#000;font-size:11px;font-weight:900;padding:4px 10px;border-radius:10px;
+}
+.card-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:rgba(200,168,75,0.08);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+}
+.card-name{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:16px}
+.card-price{
+  display:flex;align-items:baseline;gap:4px;margin-bottom:16px;
+}
+.price-amount{font-size:30px;font-weight:900;color:var(--gold)}
+.price-currency{font-size:14px;color:var(--muted)}
+.price-note{font-size:12px;color:var(--muted);margin-right:6px}
+.card-btn{
+  width:100%;padding:11px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Tajawal',sans-serif;font-weight:700;font-size:14px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:#000;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.card-btn:hover{opacity:0.9;transform:translateY(-1px)}
+.card.hidden{display:none}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 20px}
+
+/* ── PROCESS ── */
+.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.step{
+  background:var(--bg2);border:1px solid var(--border);border-radius:14px;
+  padding:22px;text-align:center;position:relative;
+}
+.step-num{
+  width:40px;height:40px;border-radius:50%;margin:0 auto 14px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  color:#000;font-size:18px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+}
+.step-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* ── CTA SECTION ── */
+.cta-section{
+  margin:20px;border-radius:20px;padding:40px 24px;text-align:center;
+  background:linear-gradient(135deg,#1a1200,#0d0900);
+  border:1px solid rgba(200,168,75,0.3);
+  box-shadow:0 0 60px rgba(200,168,75,0.08);
+}
+.cta-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:8px}
+.cta-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:24px 20px;text-align:center;
+}
+.footer-logo{
+  font-size:22px;font-weight:900;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:8px;
+}
+.footer-text{font-size:13px;color:var(--muted)}
+
+/* ── FILTER TABS ── */
+.filter-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.tab{
+  padding:8px 18px;border-radius:20px;border:1px solid var(--border);
+  background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;
+  font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;
+}
+.tab.active,.tab:hover{background:rgba(200,168,75,0.1);color:var(--gold);border-color:rgba(200,168,75,0.4)}
+
+/* ── WHATSAPP FLOAT ── */
+#wa-float{
+  position:fixed;bottom:24px;left:24px;
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#128c7e,#25d366);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(37,211,102,0.4);
+  cursor:pointer;z-index:200;text-decoration:none;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 30px rgba(37,211,102,0.7)}}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--bg3);border:1px solid var(--gold);color:var(--gold);
+  padding:12px 28px;border-radius:30px;font-weight:700;font-size:14px;
+  transition:transform 0.4s;z-index:999;box-shadow:0 0 30px rgba(200,168,75,0.3);
+  white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:600px){
+  .hero-title{font-size:26px}
+  .stat-item{padding:14px 16px}
+  .stat-num{font-size:20px}
+  .section{padding:28px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">مشروعي</div>
+  <a href="https://wa.me/96407711336372" target="_blank" class="header-cta">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.373 0 0 5.373 0 11.99c0 2.11.553 4.09 1.518 5.808L0 24l6.335-1.492A11.935 11.935 0 0011.99 24C18.607 24 24 18.627 24 12.01 24 5.393 18.607 0 11.99 0zm0 21.818a9.808 9.808 0 01-5.001-1.37l-.359-.214-3.72.876.893-3.619-.234-.372a9.808 9.808 0 01-1.508-5.239c0-5.424 4.414-9.838 9.838-9.838 5.424 0 9.838 4.414 9.838 9.838 0 5.424-4.414 9.838-9.747 9.938z"/></svg>
+    تواصل الآن
+  </a>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="position:relative;z-index:1">
+    <div class="hero-badge">⚡ وكالة برمجة احترافية</div>
+    <h1 class="hero-title">نحوّل أفكارك إلى<br><span>واقع رقمي</span></h1>
+    <p class="hero-sub">مواقع ويب وتطبيقات جوال احترافية بأحدث التقنيات وأفضل الأسعار</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/96407711336372" target="_blank" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.373 0 0 5.373 0 11.99c0 2.11.553 4.09 1.518 5.808L0 24l6.335-1.492A11.935 11.935 0 0011.99 24C18.607 24 24 18.627 24 12.01 24 5.393 18.607 0 11.99 0zm0 21.818a9.808 9.808 0 01-5.001-1.37l-.359-.214-3.72.876.893-3.619-.234-.372a9.808 9.808 0 01-1.508-5.239c0-5.424 4.414-9.838 9.838-9.838 5.424 0 9.838 4.414 9.838 9.838 0 5.424-4.414 9.838-9.747 9.938z"/></svg>
+        اطلب الآن مجاناً
+      </a>
+      <a href="../ad/" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        شاهد الإعلان
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">+50</div><div class="stat-lbl">مشروع منجز</div></div>
+  <div class="stat-item"><div class="stat-num">5★</div><div class="stat-lbl">تقييم العملاء</div></div>
+  <div class="stat-item"><div class="stat-num">24h</div><div class="stat-lbl">وقت الرد</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">ضمان الجودة</div></div>
+</div>
+
+<!-- SERVICES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      خدماتنا
+    </div>
+    <h2 class="section-title">كل ما تحتاجه في مكان واحد</h2>
+    <p class="section-sub">اختر الخدمة المناسبة وتواصل معنا مباشرة</p>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="tab active" onclick="filterCards('all',this)">الكل</button>
+    <button class="tab" onclick="filterCards('web',this)">مواقع ويب</button>
+    <button class="tab" onclick="filterCards('app',this)">تطبيقات</button>
+    <button class="tab" onclick="filterCards('extra',this)">خدمات إضافية</button>
+  </div>
+
+  <div class="cards-grid" id="cards-grid"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-tag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      كيف نعمل
+    </div>
+    <h2 class="section-title">4 خطوات بس</h2>
+  </div>
+  <div class="process-steps">
+    <div class="step"><div class="step-num">1</div><div class="step-title">تواصل معنا</div><div class="step-desc">أرسل لنا على واتساب وأخبرنا عن مشروعك</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-title">التصميم</div><div class="step-desc">نصمم لك موك أب احترافي خلال 24 ساعة</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-title">التطوير</div><div class="step-desc">نبرمج مشروعك بأحدث التقنيات</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-title">التسليم</div><div class="step-desc">نسلمك المشروع كامل مع الدعم الفني</div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">جاهز تبدأ مشروعك؟</div>
+  <div class="cta-sub">تواصل معنا الآن واحصل على استشارة مجانية<br>ونبدأ مشروعك خلال 24 ساعة</div>
+  <a href="https://wa.me/96407711336372?text=مرحبا، أريد الاستفسار عن خدماتكم" target="_blank" class="btn-primary" style="display:inline-flex">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.373 0 0 5.373 0 11.99c0 2.11.553 4.09 1.518 5.808L0 24l6.335-1.492A11.935 11.935 0 0011.99 24C18.607 24 24 18.627 24 12.01 24 5.393 18.607 0 11.99 0zm0 21.818a9.808 9.808 0 01-5.001-1.37l-.359-.214-3.72.876.893-3.619-.234-.372a9.808 9.808 0 01-1.508-5.239c0-5.424 4.414-9.838 9.838-9.838 5.424 0 9.838 4.414 9.838 9.838 0 5.424-4.414 9.838-9.747 9.938z"/></svg>
+    ابدأ الآن — مجاناً
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">مشروعي</div>
+  <div class="footer-text">بوابتك لعالم البرمجة — جميع الحقوق محفوظة 2026</div>
+</footer>
+
+<!-- WA FLOAT -->
+<a id="wa-float" href="https://wa.me/96407711336372?text=مرحبا، أريد الاستفسار عن خدماتكم" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.373 0 0 5.373 0 11.99c0 2.11.553 4.09 1.518 5.808L0 24l6.335-1.492A11.935 11.935 0 0011.99 24C18.607 24 24 18.627 24 12.01 24 5.393 18.607 0 11.99 0zm0 21.818a9.808 9.808 0 01-5.001-1.37l-.359-.214-3.72.876.893-3.619-.234-.372a9.808 9.808 0 01-1.508-5.239c0-5.424 4.414-9.838 9.838-9.838 5.424 0 9.838 4.414 9.838 9.838 0 5.424-4.414 9.838-9.747 9.938z"/></svg>
+</a>
+
+<div id="toast">تم نسخ الرابط</div>
+
+<script>
+const WA = 'https://wa.me/96407711336372?text=';
+
+const defaultServices = {
+  web:[
+    {name:'موقع شركة',desc:'موقع احترافي 5 صفحات',price:350,active:true,featured:false},
+    {name:'متجر إلكتروني',desc:'WooCommerce كامل',price:600,active:true,featured:true},
+    {name:'صفحة هبوط',desc:'Landing page تسويقية',price:150,active:true,featured:false},
+    {name:'موقع شخصي / Portfolio',desc:'تصميم مخصص',price:200,active:true,featured:false},
+    {name:'موقع حجوزات',desc:'نظام حجز متكامل',price:500,active:false,featured:false},
+  ],
+  app:[
+    {name:'تطبيق Android',desc:'APK + رفع Google Play',price:800,active:true,featured:false},
+    {name:'تطبيق iOS',desc:'IPA + رفع App Store',price:900,active:true,featured:false},
+    {name:'تطبيق Android & iOS',desc:'الحزمة الكاملة',price:1500,active:true,featured:true},
+    {name:'تطبيق React Native',desc:'Cross-platform',price:1200,active:false,featured:false},
+  ],
+  extra:[
+    {name:'استضافة سنوية',desc:'سيرفر VPS',price:120,active:true,featured:false},
+    {name:'دومين .com',desc:'تسجيل لسنة',price:15,active:true,featured:false},
+    {name:'صيانة شهرية',desc:'دعم + تحديثات',price:80,active:true,featured:false},
+    {name:'SEO شهري',desc:'تحسين محركات البحث',price:150,active:false,featured:false},
+    {name:'رفع على المتاجر',desc:'Google Play + App Store',price:100,active:true,featured:false},
+  ]
+};
+
+const services = JSON.parse(localStorage.getItem('mashro3i_services') || 'null') || defaultServices;
+
+const icons = {
+  web:[
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  ],
+  app:[
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="#c8a84b"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="#c8a84b"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="#c8a84b"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="#c8a84b"/></svg>',
+  ],
+  extra:[
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6" stroke-width="3"/><line x1="6" y1="18" x2="6.01" y2="18" stroke-width="3"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c8a84b" stroke-width="1.8" stroke-linecap="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>',
+  ]
+};
+
+let currentFilter = 'all';
+
+function renderCards(filter) {
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = '';
+  const cats = filter === 'all'
+    ? [{key:'web',items:services.web},{key:'app',items:services.app},{key:'extra',items:services.extra}]
+    : [{key:filter,items:services[filter]}];
+
+  let count = 0;
+  cats.forEach(cat => {
+    cat.items.forEach((s, i) => {
+      if (!s.active) return;
+      count++;
+      const msg = encodeURIComponent(`مرحبا، أريد الاستفسار عن خدمة: ${s.name} (${s.price}$)`);
+      const card = document.createElement('div');
+      card.className = 'card' + (s.featured ? ' featured' : '');
+      card.dataset.cat = cat.key;
+      card.innerHTML = `
+        ${s.featured ? '<div class="featured-badge">الأكثر طلباً</div>' : ''}
+        <div class="card-icon">${(icons[cat.key]||icons.extra)[i] || icons.extra[0]}</div>
+        <div class="card-name">${s.name}</div>
+        <div class="card-desc">${s.desc}</div>
+        <div class="card-price">
+          <span class="price-amount">${s.price}</span>
+          <span class="price-currency">دولار</span>
+        </div>
+        <button class="card-btn" onclick="orderService('${s.name}',${s.price})">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 0C5.373 0 0 5.373 0 11.99c0 2.11.553 4.09 1.518 5.808L0 24l6.335-1.492A11.935 11.935 0 0011.99 24C18.607 24 24 18.627 24 12.01 24 5.393 18.607 0 11.99 0zm0 21.818a9.808 9.808 0 01-5.001-1.37l-.359-.214-3.72.876.893-3.619-.234-.372a9.808 9.808 0 01-1.508-5.239c0-5.424 4.414-9.838 9.838-9.838 5.424 0 9.838 4.414 9.838 9.838 0 5.424-4.414 9.838-9.747 9.938z"/></svg>
+          اطلب الآن
+        </button>`;
+      grid.appendChild(card);
+    });
+  });
+  if(count === 0) grid.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1">لا توجد خدمات متاحة حالياً</div>';
+}
+
+function filterCards(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(filter);
+}
+
+function orderService(name, price) {
+  const msg = encodeURIComponent(`مرحبا، أريد الاستفسار عن خدمة:\n*${name}*\nالسعر: ${price}$`);
+  window.open('https://wa.me/96407711336372?text=' + msg, '_blank');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+renderCards('all');
+</script>
+</body>
+</html>
